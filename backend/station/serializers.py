@@ -9,6 +9,12 @@ class StationSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'volume_percentage', 'updated_at']
 
 
+class StationUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Station
+        fields = ['volume_percentage']
+
+
 class StationActionSerializer(serializers.ModelSerializer):
     class Meta:
         model = StationAction

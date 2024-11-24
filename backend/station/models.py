@@ -14,3 +14,6 @@ class StationAction(models.Model):
     station = models.ForeignKey(Station, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     metadata = models.JSONField()
+
+    def __str__(self) -> str:
+        return f"[{self.station.name}]  {self.action_type}: {self.created_at.strftime('%d/%m/%Y %H:%M:%S')}"
