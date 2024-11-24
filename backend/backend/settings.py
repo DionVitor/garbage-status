@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'station'
 ]
 
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'station.exceptions.custom_exception_handler',
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
