@@ -27,3 +27,19 @@ class StationUseCase(ABCStationUseCase):
         )
 
         return True
+
+    def confirm_collect(self, station_id: int) -> bool:
+        station = self.station_data_access.get_by_id(station_id)
+        if not station:
+            raise StationNotFoundException()
+
+        station["volume_percentage"] = 0
+        self.station_data_access.update(station=station)
+
+        self.station_action_data_access.create(
+            station_id=station_id,
+            action_type="confirm_collect",
+            metadata={}
+        )
+
+        return True
