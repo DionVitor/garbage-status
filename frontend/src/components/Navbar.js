@@ -49,6 +49,11 @@ const Navbar = () => {
     <>
       <AppBar position="static" sx={{ backgroundColor: 'primary.main' }}>
         <Toolbar>
+          <img 
+              src={`${process.env.PUBLIC_URL}/logo.svg`} 
+              alt="Logo" 
+              style={{ width: '30px', height: '30px', marginRight: '10px' }} 
+          />
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
            Garbage status
           </Typography>
