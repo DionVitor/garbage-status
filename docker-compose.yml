@@ -14,6 +14,19 @@ services:
     networks:
       - garbage-status
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - garbage-status-api
+    networks:
+      - garbage-status
+
   celery:
     build:
       context: ./
