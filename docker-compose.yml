@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.5"
 
 services:
   garbage-status-api:
@@ -11,3 +11,60 @@ services:
       - .:/app
     environment:
       - PYTHONUNBUFFERED=1
+    networks:
+      - garbage-status
+
+  celery:
+    build:
+      context: ./
+      dockerfile: ./backoffice/Dockerfile
+    command: celery -A backoffice.worker.app worker --loglevel=info -Q worker_queue
+    environment:
+      - CELERY_BROKER_URL=amqp://rabbit_g:rabbit_g@garbage_status_queue:5672
+    volumes:
+      - ./:/app
+    depends_on:
+      - rabbitmq
+    networks:
+      - garbage-status
+
+  beat:
+    build:
+      context: ./
+      dockerfile: ./backoffice/Dockerfile
+    command: celery -A backoffice.worker.app beat --loglevel=info
+    environment:
+      - CELERY_BROKER_URL=amqp://rabbit_g:rabbit_g@garbage_status_queue:5672
+    volumes:
+      - ./:/app
+    depends_on:
+      - rabbitmq
+      - celery
+    networks:
+      - garbage-status
+
+  flower:
+    image: mher/flower
+    environment:
+      CELERY_BROKER_URL: amqp://rabbit_g:rabbit_g@garbage_status_queue:5672
+      FLOWER_PORT: 5555
+    ports:
+      - "5555:5555"
+    depends_on:
+      - rabbitmq
+    networks:
+      - garbage-status
+
+  rabbitmq:
+    container_name: garbage_status_queue
+    image: rabbitmq:3.9.4-alpine
+    ports:
+      - "5672:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbit_g
+      RABBITMQ_DEFAULT_PASS: rabbit_g
+    networks:
+      - garbage-status
+
+networks:
+  garbage-status:
