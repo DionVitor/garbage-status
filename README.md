@@ -19,7 +19,7 @@ No Backend foi utilizado Clean Architecture para dividir as resposabilidades das
 
 Além disso, foi utilizado o Docker para criar containers para cada serviço, assim o desenvolvedor não precisa se preocupar com a instalação de dependências e configurações do ambiente.
 
-Foi utilizado o Celery Beat com o RabbitMQ para ativamente (a cada 5 minutos) verificar o status das estações de coleta de lixo e atualizar o banco de dados caso exista necessidade de criar um alerta de estação de coleta com mais de 80% de sua capacidade.
+Foi utilizado o Celery Beat com o RabbitMQ para ativamente (a cada 5 segundos) verificar o status das estações de coleta de lixo e atualizar o banco de dados caso exista necessidade de criar um alerta de estação de coleta com mais de 80% de sua capacidade.
 
 <p align="center">
     <kbd>
