@@ -55,6 +55,7 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_HEADERS = [
     'content-type',
     'authorization',
+    'X-CSRFTOKEN'
 ]
 
 CORS_ALLOW_METHODS = [
